@@ -5,6 +5,7 @@ import config from "./config";
 import { userRoute } from "./modules/userModules/user.Route";
 import { notFound } from "./middlewares/notFound";
 import { logUser } from "./modules/authMoules/auth.Route";
+import { globalErrorHandler } from "./middlewares/globalErrorHandler";
 
 
 const app: Application = express()
@@ -30,6 +31,7 @@ app.use("/api/authlogin", logUser);
 
 
 app.use(notFound)
+app.use(globalErrorHandler)
 export default app 
 
 
