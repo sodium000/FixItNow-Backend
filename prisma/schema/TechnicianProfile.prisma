@@ -1,0 +1,28 @@
+model TechnicianProfile {
+  id            String  @id @default(uuid())
+  userId        String  @unique
+  user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  experienceYrs Int?     @default(0)
+  hourlyRate    Decimal? @db.Decimal(10, 2)
+  isVerified    Boolean  @default(false)
+  isAvailable   Boolean  @default(true)
+
+  // Simple location fields (swap for a geo/PostGIS setup if needed)
+  address       String?
+  city          String?
+
+
+  avgRating     Float    @default(0)
+  totalReviews  Int      @default(0)
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  services      Service[]
+  bookings      Booking[] @relation("TechnicianBookings")
+  reviewsReceived Review[] @relation("TechnicianReviews")
+
+  @@map("technician_profiles")
+}
