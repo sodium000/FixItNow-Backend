@@ -24,7 +24,7 @@ const allCategory = async(req: Request, res: Response, next: NextFunction)=>{
         const AllCategory = await prisma.category.findMany()
           res.status(201).json({
             success: true,
-            message: "Category created successfully",
+            message: "Get All Category successfully",
             data: {AllCategory},
         });
     } catch (error) {
