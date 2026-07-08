@@ -35,7 +35,6 @@ const getMyProfile = async (req: Request, res: Response, next : NextFunction) =>
       req.user?.id as string,
     );
 
-    console.log()
 
     res.status(httpStatus.OK).json({
       success: true,

@@ -7,6 +7,7 @@ import { notFound } from "./middlewares/notFound";
 import { logUser } from "./modules/authMoules/auth.Route";
 import { globalErrorHandler } from "./middlewares/globalErrorHandler";
 import { tecnicianFilter } from "./modules/Technicians/technicians.Route";
+import { admin } from "./modules/createService/createService.Route";
 
 
 const app: Application = express()
@@ -28,6 +29,7 @@ app.get('/', (req:Request, res:Response) => {
 app.use("/api/auth", userRoute);
 app.use("/api/authlogin", logUser);
 app.use("/api", tecnicianFilter);
+app.use("/api/admin", admin);
 
 
 
