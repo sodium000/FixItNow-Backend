@@ -1,9 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
 import { userService } from "./user.service";
-import { jwtUtils } from "../../utils/jwt";
-import config from "../../config";
-import { ifError } from "node:assert";
+
 
 const registerUser = async (req: Request, res: Response) => {
   try {
@@ -36,6 +34,8 @@ const getMyProfile = async (req: Request, res: Response, next : NextFunction) =>
     const profile = await userService.getMyProfileFromDB(
       req.user?.id as string,
     );
+
+    console.log()
 
     res.status(httpStatus.OK).json({
       success: true,
