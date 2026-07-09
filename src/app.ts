@@ -10,6 +10,8 @@ import { tecnicianFilter } from "./modules/Technicians/technicians.Route";
 import { technicianSelfRoute } from "./modules/Technicians/technicianSelf.Route";
 import { admin } from "./modules/createService/createService.Route";
 import { bookingRoute } from "./modules/Bookings/booking.route";
+import { reviewRoute } from "./modules/Reviews/review.route";
+import { serviceRoute } from "./modules/Services/service.route";
 
 
 const app: Application = express()
@@ -34,6 +36,8 @@ app.use("/api", tecnicianFilter);
 app.use("/api/technician", technicianSelfRoute);
 app.use("/api/admin", admin);
 app.use("/api/bookings", bookingRoute);
+app.use("/api/reviews", reviewRoute);
+app.use("/api/services", serviceRoute);
 
 
 

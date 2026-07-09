@@ -12,8 +12,24 @@ const technicianById = async (id: string) => {
       id: id,
     },
     include: {
-      user: true,
+      user: {
+        omit :{
+          password : true
+        }
+      },
       reviewsReceived: {
+        include:{
+          customer  :{
+            select:{
+              name : true
+            }
+          }
+          
+        },
+        omit :{
+          technicianId : true,
+          customerId : true,
+        },
         orderBy: {
           createdAt: "desc", // Sort reviews by newest first
         },
@@ -44,24 +60,43 @@ const updateTechnicianProfile = async (
 
   const { name, phone, experienceYrs, hourlyRate, address, city } = payload;
 
-  if (name !== undefined || phone !== undefined) {
+  const userUpdateData: { name?: string; phone?: string } = {};
+  if (name !== undefined) {
+    userUpdateData.name = name;
+  }
+  if (phone !== undefined) {
+    userUpdateData.phone = phone;
+  }
+
+  if (Object.keys(userUpdateData).length > 0) {
     await prisma.user.update({
       where: { id: userId },
-      data: {
-        ...(name !== undefined && { name }),
-        ...(phone !== undefined && { phone }),
-      },
+      data: userUpdateData,
     });
+  }
+
+  const profileUpdateData: {
+    experienceYrs?: number;
+    hourlyRate?: number;
+    address?: string;
+    city?: string;
+  } = {};
+  if (experienceYrs !== undefined) {
+    profileUpdateData.experienceYrs = experienceYrs;
+  }
+  if (hourlyRate !== undefined) {
+    profileUpdateData.hourlyRate = hourlyRate;
+  }
+  if (address !== undefined) {
+    profileUpdateData.address = address;
+  }
+  if (city !== undefined) {
+    profileUpdateData.city = city;
   }
 
   const updatedProfile = await prisma.technicianProfile.update({
     where: { userId },
-    data: {
-      ...(experienceYrs !== undefined && { experienceYrs }),
-      ...(hourlyRate !== undefined && { hourlyRate }),
-      ...(address !== undefined && { address }),
-      ...(city !== undefined && { city }),
-    },
+    data: profileUpdateData,
     include: {
       user: {
         omit: {

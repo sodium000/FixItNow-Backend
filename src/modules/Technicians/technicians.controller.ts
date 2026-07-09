@@ -57,7 +57,7 @@ const getTechnicianById = async(req:Request,res:Response,next:NextFunction)=>{
       res.status(httpStatus.OK).json({
       success: true,
       statusCode: httpStatus.OK,
-      message: "User profile fetched successfully",
+      message: "Technician profile fetched successfully",
       data: { tecnicianById },
     });
 
