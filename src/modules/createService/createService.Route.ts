@@ -25,8 +25,24 @@ router.get("/users", auth(Role.ADMIN),async(req: Request, res: Response, next: N
         next(error)
     }
 });
+router.get("/bookings", auth(Role.ADMIN),async(req: Request, res: Response, next: NextFunction)=>{
+    try {
+        const Allbooking = await prisma.booking.findMany({
+            include:{
+                technician: true
+            }
+        })
+          res.status(201).json({
+            success: true,
+            message: "Get all booking infomation",
+            data: {Allbooking},
+        });
+    } catch (error) {
+        next(error)
+    }
+});
 
-router.post("/users/:id", auth(Role.ADMIN),catagory.UserUpdata)
+router.patch("/users/:id", auth(Role.ADMIN),catagory.UserUpdata)
 
 
 export const admin = router

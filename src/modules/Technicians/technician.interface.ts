@@ -10,3 +10,7 @@ export interface UpdateTechnicianProfilePayload {
 export interface UpdateTechnicianAvailabilityPayload {
   isAvailable: boolean;
 }
+
+export interface UpdateTechnicianBookingStatusPayload {
+  status: "ACCEPT" | "DECLINE" | "COMPLETED";
+}

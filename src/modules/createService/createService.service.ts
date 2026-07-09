@@ -3,15 +3,36 @@ import { prisma } from "../../lib/prisma";
 interface Data {
   name: string;
   description?: string;
+  services?: {
+    name: string;
+    price: number;
+    technicianId: string;
+    isActive?: boolean;
+  }[];
 }
 
 const createdCategory = async (payload: Data) => {
-  const { name, description } = payload;
+  const { name, description, services } = payload;
 
   const category = await prisma.category.create({
     data: {
       name,
       description,
+      ...(services && services.length > 0
+        ? {
+            services: {
+              create: services.map((service) => ({
+                name: service.name,
+                price: service.price,
+                technicianId: service.technicianId,
+                isActive: service.isActive ?? true,
+              })),
+            },
+          }
+        : {}),
+    },
+    include: {
+      services: true,
     },
   });
 

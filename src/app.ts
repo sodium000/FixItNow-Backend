@@ -9,6 +9,7 @@ import { globalErrorHandler } from "./middlewares/globalErrorHandler";
 import { tecnicianFilter } from "./modules/Technicians/technicians.Route";
 import { technicianSelfRoute } from "./modules/Technicians/technicianSelf.Route";
 import { admin } from "./modules/createService/createService.Route";
+import { bookingRoute } from "./modules/Bookings/booking.route";
 
 
 const app: Application = express()
@@ -32,6 +33,7 @@ app.use("/api/authlogin", logUser);
 app.use("/api", tecnicianFilter);
 app.use("/api/technician", technicianSelfRoute);
 app.use("/api/admin", admin);
+app.use("/api/bookings", bookingRoute);
 
 
 

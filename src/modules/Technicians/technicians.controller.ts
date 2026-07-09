@@ -217,6 +217,52 @@ const updateAvailability = async (
   }
 };
 
+const updateBookingStatus = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const restrictedFields = ["id", "customerId", "technicianId", "serviceId", "totalAmount"];
+    const attemptedRestrictedField = restrictedFields.find(
+      (field) => req.body[field] !== undefined,
+    );
+
+    if (attemptedRestrictedField) {
+      return res.status(httpStatus.BAD_REQUEST).json({
+        success: false,
+        message: `${attemptedRestrictedField} cannot be updated from this route`,
+      });
+    }
+
+    const { id } = req.params;
+    const { status } = req.body;
+    const allowedStatuses = ["ACCEPT", "DECLINE", "COMPLETED"];
+
+    if (typeof status !== "string" || !allowedStatuses.includes(status)) {
+      return res.status(httpStatus.BAD_REQUEST).json({
+        success: false,
+        message: "status must be one of ACCEPT, DECLINE, or COMPLETED",
+      });
+    }
+
+    const booking = await tecnicianFilter.updateTechnicianBookingStatus(
+      req.user!.id,
+      id as string,
+      { status: status as "ACCEPT" | "DECLINE" | "COMPLETED" },
+    );
+
+    res.status(httpStatus.OK).json({
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Booking status updated successfully",
+      data: { booking },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const getTecnicians = {
   getAllTecnicians,
   getTechnicianById,
@@ -225,4 +271,5 @@ export const getTecnicians = {
 export const technicianSelf = {
   updateProfile,
   updateAvailability,
+  updateBookingStatus,
 };

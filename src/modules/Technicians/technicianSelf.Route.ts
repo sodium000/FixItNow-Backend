@@ -11,5 +11,10 @@ router.put(
   auth(Role.TECHNICIAN),
   technicianSelf.updateAvailability,
 );
+router.patch(
+  "/bookings/:id",
+  auth(Role.TECHNICIAN),
+  technicianSelf.updateBookingStatus,
+);
 
 export const technicianSelfRoute = router;
