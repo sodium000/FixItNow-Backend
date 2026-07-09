@@ -12,6 +12,7 @@ import { admin } from "./modules/createService/createService.Route";
 import { bookingRoute } from "./modules/Bookings/booking.route";
 import { reviewRoute } from "./modules/Reviews/review.route";
 import { serviceRoute } from "./modules/Services/service.route";
+import { paymentRoute } from "./modules/Payments/payment.route";
 
 
 const app: Application = express()
@@ -38,6 +39,7 @@ app.use("/api/admin", admin);
 app.use("/api/bookings", bookingRoute);
 app.use("/api/reviews", reviewRoute);
 app.use("/api/services", serviceRoute);
+app.use("/api/payments", paymentRoute);
 
 
 
