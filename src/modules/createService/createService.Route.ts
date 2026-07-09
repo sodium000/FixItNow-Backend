@@ -7,8 +7,8 @@ import { prisma } from "../../lib/prisma";
 
 const router = Router()
 
-router.post("/categories", auth(Role.ADMIN),catagory.NewCategory)
-router.get("/categories", auth(Role.ADMIN),catagory.allCategory)
+router.post("/categories", auth(Role.ADMIN),catagory.NewCategory);
+router.get("/categories", auth(Role.ADMIN),catagory.allCategory);
 router.get("/users", auth(Role.ADMIN),async(req: Request, res: Response, next: NextFunction)=>{
     try {
         const Alluser = await prisma.user.findMany({
@@ -24,7 +24,9 @@ router.get("/users", auth(Role.ADMIN),async(req: Request, res: Response, next: N
     } catch (error) {
         next(error)
     }
-})
+});
+
+router.post("/users/:id", auth(Role.ADMIN),catagory.UserUpdata)
 
 
 export const admin = router
