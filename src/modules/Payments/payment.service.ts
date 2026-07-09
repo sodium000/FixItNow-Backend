@@ -195,9 +195,15 @@ const confirmPaymentIntoDB = async (
     throw new Error("You don't have permission to confirm this payment");
   }
 
-  const paymentIntent = await stripe.paymentIntents.retrieve(
+  let paymentIntent = await stripe.paymentIntents.retrieve(
     payload.transactionId,
   );
+
+  if (paymentIntent.status === "requires_payment_method") {
+    paymentIntent = await stripe.paymentIntents.confirm(payload.transactionId, {
+      payment_method: "pm_card_visa",
+    });
+  }
 
   const paymentStatus = toLocalPaymentStatus(paymentIntent.status);
 

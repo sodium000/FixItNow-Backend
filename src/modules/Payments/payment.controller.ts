@@ -95,15 +95,17 @@ const confirmPayment = async (
       ...(method !== undefined && { method }),
     });
 
-    const message =
-      result.payment.status === "COMPLETED"
-        ? "Payment confirmed successfully"
-        : "Payment verification is pending";
+    const isCompleted = result.payment.status === "COMPLETED";
+    const isFailed = result.payment.status === "FAILED";
 
     res.status(httpStatus.OK).json({
-      success: true,
+      success: isCompleted,
       statusCode: httpStatus.OK,
-      message,
+      message: isCompleted
+        ? "Payment confirmed successfully"
+        : isFailed
+          ? "Payment verification failed"
+          : "Payment verification is pending",
       data: result,
     });
   } catch (error) {
