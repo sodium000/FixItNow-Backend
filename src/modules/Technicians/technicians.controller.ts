@@ -75,6 +75,18 @@ const updateProfile = async (
   next: NextFunction,
 ) => {
   try {
+    const restrictedFields = ["id", "userId", "role", "email", "isActive", "isVerified", "isAvailable"];
+    const attemptedRestrictedField = restrictedFields.find(
+      (field) => req.body[field] !== undefined,
+    );
+
+    if (attemptedRestrictedField) {
+      return res.status(httpStatus.BAD_REQUEST).json({
+        success: false,
+        message: `${attemptedRestrictedField} cannot be updated from this route`,
+      });
+    }
+
     const { name, phone, experienceYrs, hourlyRate, address, city } = req.body;
 
     if (
@@ -168,6 +180,18 @@ const updateAvailability = async (
   next: NextFunction,
 ) => {
   try {
+    const restrictedFields = ["id", "userId", "role", "email", "isActive", "isVerified"];
+    const attemptedRestrictedField = restrictedFields.find(
+      (field) => req.body[field] !== undefined,
+    );
+
+    if (attemptedRestrictedField) {
+      return res.status(httpStatus.BAD_REQUEST).json({
+        success: false,
+        message: `${attemptedRestrictedField} cannot be updated from this route`,
+      });
+    }
+
     const { isAvailable } = req.body;
 
     if (typeof isAvailable !== "boolean") {
