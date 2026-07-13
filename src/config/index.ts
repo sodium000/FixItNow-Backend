@@ -18,6 +18,7 @@ export default {
     stripe_secret_key: process.env.STRIPE_SECRET_KEY,
     stripe_publishable_key: process.env.STRIPE_PUBLISHABLE_KEY,
     stripe_currency: process.env.STRIPE_CURRENCY,
-    stripe_product_price_id:process.env.STRIPE_PRODUCT_PRICE_ID
+    stripe_product_price_id:process.env.STRIPE_PRODUCT_PRICE_ID,
+    stripe_webhook_srcret:process.env.STRIPE_WEBHOOK_SECRET
 
 }
