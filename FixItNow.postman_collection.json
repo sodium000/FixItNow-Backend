@@ -1,0 +1,806 @@
+{
+  "info": {
+    "_postman_id": "01e3aa77-37e5-453a-a8eb-3b58bc8fbc0d",
+    "name": "FixItNow",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "42854805"
+  },
+  "item": [
+    {
+      "name": "users",
+      "item": [
+        {
+          "name": "registration",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Raisul Islam Tonmoy\",\r\n  \"email\": \"raisultonmoy@gmail.com\",\r\n  \"password\": \"raisultonmoy11\",\r\n  \"role\": \"ADMIN\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get my profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/auth/me",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "login",
+      "item": [
+        {
+          "name": "login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"alexwong@gmail.com\",\r\n  \"password\": \"mySimplePassword99\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/authlogin/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "authlogin",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get new refreshToken",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/authlogin/refresh-token",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "authlogin",
+                "refresh-token"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Services & Technicians (Public)",
+      "item": [
+        {
+          "name": "service Filter",
+          "item": [
+            {
+              "name": "All service details",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"bookingId\": \"cmrdarbxt0002fcj40hmue1zq\",\r\n  \"rating\": 2,\r\n  \"comment\": \"Good work\"\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:5000/api/services",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "5000",
+                  "path": [
+                    "api",
+                    "services"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "filter by type",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:5000/api/services?type=plumbing",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "5000",
+                  "path": [
+                    "api",
+                    "services"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "plumbing"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "filter by city",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:5000/api/services?location=dhaka",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "5000",
+                  "path": [
+                    "api",
+                    "services"
+                  ],
+                  "query": [
+                    {
+                      "key": "location",
+                      "value": "dhaka"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "filter by rating",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:5000/api/services?rating=4",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "5000",
+                  "path": [
+                    "api",
+                    "services"
+                  ],
+                  "query": [
+                    {
+                      "key": "rating",
+                      "value": "4"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "more field by filter",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:5000/api/services?type=electrical&location=dhaka&rating=4.5&time=8890",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "5000",
+                  "path": [
+                    "api",
+                    "services"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "electrical"
+                    },
+                    {
+                      "key": "location",
+                      "value": "dhaka"
+                    },
+                    {
+                      "key": "rating",
+                      "value": "4.5"
+                    },
+                    {
+                      "key": "time",
+                      "value": "8890"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "get all technician",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/technicians",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "technicians"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get technician profile by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/technicians/4b24fde1-7516-43e4-856a-d13a2437aff2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "technicians",
+                "4b24fde1-7516-43e4-856a-d13a2437aff2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all service categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/allservice",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "allservice"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Create Category/Admin Route",
+      "item": [
+        {
+          "name": "create category",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Moving Service\",\r\n  \"description\": \"Home and office relocation services\",\r\n  \"services\": [\r\n    {\r\n      \"name\": \"Apartment Moving\",\r\n      \"price\": 4000,\r\n      \"technicianId\": \"4b24fde1-7516-43e4-856a-d13a2437aff2\"\r\n    },\r\n    {\r\n      \"name\": \"Office Relocation\",\r\n      \"price\": 8000,\r\n      \"technicianId\": \"616baf2d-b1b0-4696-a17a-d60a7dadef67\"\r\n    }\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/admin/categories",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "admin",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get All category",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/admin/categories",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "admin",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all User",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/admin/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "admin",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update User Status",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"isActive\" : false\r\n    \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/admin/users/a41da9ef-d642-49cf-aee1-4055501bc89f",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "admin",
+                "users",
+                "a41da9ef-d642-49cf-aee1-4055501bc89f"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get AllBooking",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/admin/bookings",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "admin",
+                "bookings"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Technician Management",
+      "item": [
+        {
+          "name": "Update Technician",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"John Doe\",\r\n  \"phone\": \"01700000000\",\r\n  \"experienceYrs\": 5,\r\n  \"hourlyRate\": 500,\r\n  \"address\": \"123 Main St\",\r\n  \"city\": \"Dhaka\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/technician/profile",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "technician",
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Technician availability",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"isAvailable\": \"truesdfdasfsd\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/technician/availability",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "technician",
+                "availability"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get technician's own bookings",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/technician/bookings",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "technician",
+                "bookings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update booking status",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\" : \"COMPLETED\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/technician/bookings/cmrdasvb40005fcj4jwp5r66s",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "technician",
+                "bookings",
+                "cmrdasvb40005fcj4jwp5r66s"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Booking",
+      "item": [
+        {
+          "name": "create Booking",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"serviceId\": \"78c4ff68-444f-494c-b54c-fc1a27925a75\",\r\n  \"scheduledAt\": \"2026-07-14T17:00:00.000Z\",\r\n  \"address\": \"House 18, Aftabnagar, Dhaka\",\r\n  \"notes\": \"Customer prefers evening appointment\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/bookings",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "bookings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "my booking list",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"serviceId\": \"6c9645ba-c6d6-4a64-881b-46bfe30aa3b6\",\r\n  \"scheduledAt\": \"2026-07-13T10:00:00.000Z\",\r\n  \"address\": \"House 22, Badda, Dhaka\",\r\n  \"notes\": \"Customer works from home\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/bookings",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "bookings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get booking by Id",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"serviceId\": \"78c4ff68-444f-494c-b54c-fc1a27925a75\",\r\n  \"scheduledAt\": \"2026-07-14T17:00:00.000Z\",\r\n  \"address\": \"House 18, Aftabnagar, Dhaka\",\r\n  \"notes\": \"Customer prefers evening appointment\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/bookings/cmrdazmf60008fcj4y3ssjdjy",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "bookings",
+                "cmrdazmf60008fcj4y3ssjdjy"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Review",
+      "item": [
+        {
+          "name": "revies post",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"bookingId\": \"cmrdarbxt0002fcj40hmue1zq\",\r\n  \"rating\": 2,\r\n  \"comment\": \"Good work\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/reviews",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "reviews"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "paymentSystem",
+      "item": [
+        {
+          "name": "create payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "\"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE0MWRhOWVmLWQ2NDItNDljZi1hZWUxLTQwNTU1MDFiYzg5ZiIsIm5hbWUiOiJBbGV4IFdvbmciLCJlbWFpbCI6ImFsZXh3b25nQGdtYWlsLmNvbSIsInJvbGUiOiJDVVNUT01FUiIsImlhdCI6MTc4MzYwNDUwMCwiZXhwIjoxNzgzNjkwOTAwfQ.0WHYQCuqyC-ESaZ6r_wEimOXGYWXewzr2id9UF7HZ0Y\"",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"bookingId\": \"cmrdasvb40005fcj4jwp5r66s\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/payments/checkout",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "payments",
+                "checkout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Payment get by login User",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/payments",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "payments"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Payment get by Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/payments/0cd87936-4c6a-4313-9fbc-936d83c6455e",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "payments",
+                "0cd87936-4c6a-4313-9fbc-936d83c6455e"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

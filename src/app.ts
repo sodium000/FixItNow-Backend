@@ -28,7 +28,7 @@ app.use(
 // Stripe webhooks need the raw body — this route must be registered before express.json()
 app.post(
   "/api/payments/confirm",
-  express.raw({ type: "*/*" }),
+  express.raw({ type: "application/json" }),
   paymentController.confirmPaymentWebhook,
 );
 
