@@ -2,36 +2,13 @@ import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
 import { paymentService } from "./payment.service";
 
-
-const createPaymentIntent = async (
+const createCheckoutSession = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   try {
-
-
-
-
-    // const restrictedFields = [
-    //   "id",
-    //   "transactionId",
-    //   "amount",
-    //   "status",
-    //   "provider",
-    //   "paidAt",
-    // ];
-    // const attemptedRestrictedField = restrictedFields.find(
-    //   (field) => req.body[field] !== undefined,
-    // );
-
-    // if (attemptedRestrictedField) {
-    //   return res.status(httpStatus.BAD_REQUEST).json({
-    //     success: false,
-    //     message: `${attemptedRestrictedField} cannot be set from this route`,
-    //   });
-    // }
-
+    const userId = req.user?.id;
     const { bookingId } = req.body;
 
     if (!bookingId || typeof bookingId !== "string") {
@@ -41,15 +18,15 @@ const createPaymentIntent = async (
       });
     }
 
-    const result = await paymentService.createPaymentIntentIntoDB(
-      req.user!.id,
+    const result = await paymentService.createCheckoutSession(
+      userId as string,
       bookingId,
     );
 
-    res.status(httpStatus.CREATED).json({
+    res.status(httpStatus.OK).json({
       success: true,
-      statusCode: httpStatus.CREATED,
-      message: "Payment intent created successfully",
+      statusCode: httpStatus.OK,
+      message: "Checkout session created successfully",
       data: result,
     });
   } catch (error) {
@@ -57,112 +34,129 @@ const createPaymentIntent = async (
   }
 };
 
-// const confirmPayment = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction,
-// ) => {
-//   try {
-//     const restrictedFields = ["id", "amount", "status", "provider", "paidAt"];
-//     const attemptedRestrictedField = restrictedFields.find(
-//       (field) => req.body[field] !== undefined,
-//     );
+const confirmPaymentSuccess = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const sessionId = req.query.session_id as string | undefined;
 
-//     if (attemptedRestrictedField) {
-//       return res.status(httpStatus.BAD_REQUEST).json({
-//         success: false,
-//         message: `${attemptedRestrictedField} cannot be set from this route`,
-//       });
-//     }
+    if (!sessionId) {
+      return res.status(httpStatus.BAD_REQUEST).json({
+        success: false,
+        message: "session_id is required",
+      });
+    }
 
-//     const { transactionId, method } = req.body;
+    const result = await paymentService.confirmPaymentFromCheckoutSession(
+      sessionId,
+    );
 
-//     if (!transactionId || typeof transactionId !== "string") {
-//       return res.status(httpStatus.BAD_REQUEST).json({
-//         success: false,
-//         message: "transactionId is required and must be a string",
-//       });
-//     }
+    res.status(httpStatus.OK).json({
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Payment completed successfully",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
-//     if (
-//       method !== undefined &&
-//       !Object.values(PaymentMethod).includes(method as PaymentMethod)
-//     ) {
-//       return res.status(httpStatus.BAD_REQUEST).json({
-//         success: false,
-//         message: "method must be one of CARD, MOBILE_BANKING, or CASH",
-//       });
-//     }
+const confirmPaymentWebhook = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    console.log("Stripe webhook received at /api/payments/confirm");
 
-//     const result = await paymentService.confirmPaymentIntoDB(req.user!.id, {
-//       transactionId,
-//       ...(method !== undefined && { method }),
-//     });
+    const payload = Buffer.isBuffer(req.body)
+      ? req.body
+      : Buffer.from(
+          typeof req.body === "string"
+            ? req.body
+            : JSON.stringify(req.body ?? {}),
+        );
 
-//     const isCompleted = result.payment.status === "COMPLETED";
-//     const isFailed = result.payment.status === "FAILED";
+    const signature = Array.isArray(req.headers["stripe-signature"])
+      ? req.headers["stripe-signature"][0]
+      : req.headers["stripe-signature"] || req.get("stripe-signature");
 
-//     res.status(httpStatus.OK).json({
-//       success: isCompleted,
-//       statusCode: httpStatus.OK,
-//       message: isCompleted
-//         ? "Payment confirmed successfully"
-//         : isFailed
-//           ? "Payment verification failed"
-//           : "Payment verification is pending",
-//       data: result,
-//     });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
+    if (!signature || typeof signature !== "string") {
+      return res.status(httpStatus.BAD_REQUEST).json({
+        success: false,
+        message:
+          "Missing stripe-signature header. Make sure the request is coming from Stripe or Stripe CLI and is sent to /api/payments/confirm.",
+      });
+    }
 
-// const getMyPayments = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction,
-// ) => {
-//   try {
-//     const payments = await paymentService.getMyPaymentsFromDB(req.user!.id);
+    await paymentService.handleWebhook(payload, signature);
 
-//     res.status(httpStatus.OK).json({
-//       success: true,
-//       statusCode: httpStatus.OK,
-//       message: "Payment history fetched successfully",
-//       data: { payments },
-//     });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
+    res.status(httpStatus.OK).send();
+  } catch (error) {
+    if (
+      error instanceof Error &&
+      error.message.startsWith("Webhook signature verification failed")
+    ) {
+      return res.status(httpStatus.BAD_REQUEST).json({
+        success: false,
+        message: error.message,
+      });
+    }
 
-// const getPaymentById = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction,
-// ) => {
-//   try {
-//     const { id } = req.params;
+    next(error);
+  }
+};
 
-//     const payment = await paymentService.getPaymentDetailsFromDB(
-//       id as string,
-//       req.user!.id,
-//     );
+const getMyPayments = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const payments = await paymentService.getMyPaymentsFromDB(req.user!.id);
 
-//     res.status(httpStatus.OK).json({
-//       success: true,
-//       statusCode: httpStatus.OK,
-//       message: "Payment details fetched successfully",
-//       data: payment,
-//     });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
+    res.status(httpStatus.OK).json({
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Payment history fetched successfully",
+      data: { payments },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getPaymentById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { id } = req.params;
+
+    const payment = await paymentService.getPaymentDetailsFromDB(
+      id as string,
+      req.user!.id,
+    );
+
+    res.status(httpStatus.OK).json({
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Payment details fetched successfully",
+      data: payment,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const paymentController = {
-  createPaymentIntent,
-  // confirmPayment,
-  // getMyPayments,
-  // getPaymentById,
+  createCheckoutSession,
+  confirmPaymentSuccess,
+  confirmPaymentWebhook,
+  getMyPayments,
+  getPaymentById,
 };
