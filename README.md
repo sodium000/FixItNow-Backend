@@ -1,5 +1,7 @@
 # FixItNow
 
+🚀 Live demo: [https://fix-it-now-eta.vercel.app/](https://fix-it-now-eta.vercel.app/)
+
 FixItNow is a TypeScript-based Express API for booking technicians, services, payments, reviews, and user management. The app uses Prisma for database access and Stripe for payment processing.
 
 ## Features
@@ -156,6 +158,44 @@ npm run dev
 ```bash
 npm run stripe:webhook
 ```
+
+## Vercel Deployment
+
+This project can be deployed to Vercel as a serverless Node app.
+
+### Setup
+
+1. Sign in to Vercel and import this repository.
+2. Set the framework preset to `Other` or `Node.js`.
+3. Add the same environment variables used locally under the Vercel dashboard.
+4. Add a `vercel.json` file in the project root.
+
+### Build & Output
+
+Vercel will use the following configuration:
+
+- Build command: `npm install`
+- Output: serverless function based on `src/server.ts`
+
+### Environment variables required on Vercel
+
+- `DATABASE_URL`
+- `APP_URL`
+- `BCRYPT_SALT_ROUNDS`
+- `JWT_ACCESS_EXPIRES_SECRET`
+- `JWT_REFRESH_EXPIRES_SECRET`
+- `JWT_ACCESS_EXPIRES_IN`
+- `JWT_REFRESH_EXPIRES_IN`
+- `STRIPE_SECRET_KEY`
+- `STRIPE_PUBLISHABLE_KEY`
+- `STRIPE_CURRENCY`
+- `STRIPE_PRODUCT_PRICE_ID`
+- `STRIPE_WEBHOOK_SECRET`
+
+### Notes
+
+- `PORT` is not required on Vercel; the platform sets the port automatically.
+- Ensure Stripe webhook endpoints in Stripe dashboard point to the deployed `/api/payments/confirm` URL.
 
 ## Notes
 
