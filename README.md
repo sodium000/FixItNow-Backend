@@ -45,9 +45,9 @@ FixItNow is a TypeScript-based Express API for booking technicians, services, pa
 npm install
 ```
 
-2. Create a `.env` file in the project root.
+2. Create a `.env` file in the project root or copy the provided `.env.example`.
 
-3. Configure environment variables (example below).
+3. Configure environment variables as shown below.
 
 4. Generate Prisma client and run migrations if needed:
 
