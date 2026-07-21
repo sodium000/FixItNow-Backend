@@ -22,7 +22,7 @@ export const globalErrorHandler = (err: any, req: Request, res: Response, next: 
             errorMessage = "Foreign key constraint failed"
         }else if(err.code === "P2025"){
             statusCode = httpStatus.BAD_REQUEST,
-                errorMessage = "An operation failed because it depends on one or more records that were required but not found."
+                errorMessage = "An operation failed because it depends on one or more records that were required but not found or you are not acesse user"
         }
     }else if(err instanceof Prisma.PrismaClientInitializationError){
        if(err.errorCode === "P1000"){
