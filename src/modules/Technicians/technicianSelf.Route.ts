@@ -5,10 +5,10 @@ import { technicianSelf } from "./technicians.controller";
 
 const router = Router();
 
-router.put("/profile", auth(Role.TECHNICIAN), technicianSelf.updateProfile);
+router.put("/profile", auth(Role.TECHNICIAN,Role.ADMIN), technicianSelf.updateProfile);
 router.put(
   "/availability",
-  auth(Role.TECHNICIAN),
+  auth(Role.TECHNICIAN,Role.ADMIN),
   technicianSelf.updateAvailability,
 );
 router.patch(
