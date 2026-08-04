@@ -74,6 +74,25 @@ const getAllServicesFromDB = async (query: GetServicesQuery) => {
   return services;
 };
 
+const getServiceByIdFromDB = async (serviceId: string) => {
+  return prisma.service.findUnique({
+    where: { id: serviceId },
+    include: {
+      category: true,
+      technician: {
+        include: {
+          user: {
+            omit: {
+              password: true,
+            },
+          },
+        },
+      },
+    },
+  });
+};
+
 export const serviceService = {
   getAllServicesFromDB,
+  getServiceByIdFromDB,
 };

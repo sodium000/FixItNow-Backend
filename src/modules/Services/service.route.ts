@@ -4,5 +4,6 @@ import { serviceController } from "./service.controller";
 const router = Router();
 
 router.get("/", serviceController.getAllServices);
+router.get("/:id", serviceController.getServiceById);
 
 export const serviceRoute = router;

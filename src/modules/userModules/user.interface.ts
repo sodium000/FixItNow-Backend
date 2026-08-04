@@ -8,6 +8,7 @@ export interface RegisterUserPayload {
   email: string;
   password: string;
   phone?: string;
+  photo?: string,
   isActive: boolean; // Fixed: lowercase 'boolean'
   role: Role; // Fixed: capitalized 'Role'
   technicianProfile?: string;

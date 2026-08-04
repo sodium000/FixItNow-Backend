@@ -29,10 +29,24 @@ router.get("/bookings", auth(Role.ADMIN),async(req: Request, res: Response, next
     try {
         const Allbooking = await prisma.booking.findMany({
             include:{
-                technician: true
+                technician: {
+                    include: {
+                        user: {
+                            omit: {
+                                password: true,
+                            },
+                        },
+                    },
+                },
+                customer: {
+                    omit: {
+                        password: true,
+                    },
+                },
+                service: true,
             }
         })
-          res.status(201).json({
+          res.status(200).json({
             success: true,
             message: "Get all booking infomation",
             data: {Allbooking},

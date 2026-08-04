@@ -32,7 +32,8 @@ const loginUser = async (playlode:LoginUser)=>{
         id: user.id,
         name: user.name,
         email: user.email,
-        role: user.role
+        role: user.role,
+        photo: user.photoUrl
     }
 
       const accessToken = jwtUtils.createToken(

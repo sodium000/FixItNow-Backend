@@ -68,6 +68,42 @@ const getAllServices = async (
   }
 };
 
+const getServiceById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { id } = req.params;
+
+    if (!id || typeof id !== "string") {
+      return res.status(httpStatus.BAD_REQUEST).json({
+        success: false,
+        message: "Service id is required",
+      });
+    }
+
+    const service = await serviceService.getServiceByIdFromDB(id);
+
+    if (!service) {
+      return res.status(httpStatus.NOT_FOUND).json({
+        success: false,
+        message: "Service not found",
+      });
+    }
+
+    res.status(httpStatus.OK).json({
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Service fetched successfully",
+      data: { service },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const serviceController = {
   getAllServices,
+  getServiceById,
 };

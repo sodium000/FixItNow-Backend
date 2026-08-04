@@ -3,79 +3,88 @@ import { prisma } from "../../lib/prisma";
 import config from "../../config";
 import { RegisterUserPayload } from "./user.interface";
 
-const registerUserIntoDB = async (payload: RegisterUserPayload) =>{
-const {
-  name,
-  email,
-  password,
-  role,
-  experienceYrs,
-  hourlyRate,
-  city,
-  address,
-} = payload;
-    const isUserExist = await prisma.user.findUnique({
-        where: { email }
-    })
+const registerUserIntoDB = async (payload: RegisterUserPayload) => {
+  const {
+    name,
+    email,
+    password,
+    role,
+    photo,
+      phone,
+    experienceYrs,
+    hourlyRate,
+    city,
+    address,
+  } = payload;
 
+  console.log(payload)
 
-    if (isUserExist) {
-        throw new Error("User with this email already exists");
-    }
+  const isUserExist = await prisma.user.findUnique({
+    where: { email },
+  });
 
-    const hashedPassword = await bcrypt.hash(password, Number(config.bcrypt_salt_rounds))
+  if (isUserExist) {
+    throw new Error("User with this email already exists");
+  }
 
-    const createdUser = await prisma.user.create({
-        data: {
-            name,
-            email,
-            password: hashedPassword,
-            role,
+  const hashedPassword = await bcrypt.hash(
+    password,
+    Number(config.bcrypt_salt_rounds),
+  );
 
-            ...(role==="TECHNICIAN")&&{
-                technicianProfile : {
-                create: {
-                    experienceYrs,
-                    hourlyRate,
-                    city,
-                    address
-                }
-            }}
-          
-        }
-    });
+  const createdUser = await prisma.user.create({
+    data: {
+      name,
+      email,
+      password:hashedPassword,
+      role,
+      photoUrl:photo,
+      phone,
 
-    const user = await prisma.user.findUnique({
-        where: {
-            id: createdUser.id,
-            email: createdUser.email || email
+      ...(role === "TECHNICIAN" && {
+        technicianProfile: {
+          create: {
+            experienceYrs,
+            hourlyRate,
+            city,
+            address,
+          },
         },
-        omit: {
-            password: true
-        },
-        include: {
-            technicianProfile: true
-        }
-    })
+      }),
+    },
+  });
 
-    return user;
-}
+  const user = await prisma.user.findUnique({
+    where: {
+      id: createdUser.id,
+      email: createdUser.email || email,
+    },
+    omit: {
+      password: true,
+    },
+    include: {
+      technicianProfile: true,
+    },
+  });
 
-const getMyProfileFromDB = async (userId : string) => {
-    const user = await prisma.user.findUniqueOrThrow({
-        where : {id : userId},
-        omit : {
-            password : true
-        },
-        include : {
-            technicianProfile : true
-        }
-    });
+  return user;
+};
 
-    return user;
-}
+const getMyProfileFromDB = async (userId: string) => {
+  const user = await prisma.user.findUniqueOrThrow({
+    where: { id: userId },
+    omit: {
+      password: true,
+    },
+    include: {
+      technicianProfile: true,
+    },
+  });
 
+  return user;
+};
 
-export const userService ={
-    registerUserIntoDB,getMyProfileFromDB
-}
+export const userService = {
+  registerUserIntoDB,
+  getMyProfileFromDB,
+};

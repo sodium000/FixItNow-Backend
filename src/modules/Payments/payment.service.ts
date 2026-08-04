@@ -94,8 +94,8 @@ const createCheckoutSession = async (userId: string, bookingId: string) => {
       mode: "payment",
       customer: customer.id,
       payment_method_types: ["card"],
-      success_url: `${baseUrl}/api/payments/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${baseUrl}/api/payments/cancel`,
+      success_url: `http://localhost:3000/payment/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `http://localhost:3000/payments/cancel`,
       metadata: { userId: user.id, bookingId: booking.id },
       payment_intent_data: {
         metadata: { userId: user.id, bookingId: booking.id },
