@@ -76,7 +76,7 @@ const createCheckoutSession = async (userId: string, bookingId: string) => {
     });
 
     const baseUrl = config.app_url || "http://localhost:5000";
-    console.log(baseUrl);
+    
 
     const session = await stripe.checkout.sessions.create({
       line_items: [
@@ -102,6 +102,8 @@ const createCheckoutSession = async (userId: string, bookingId: string) => {
         metadata: { userId: user.id, bookingId: booking.id },
       },
     });
+
+    console.log(baseUrl);
 
     if (!session.url) {
       throw new Error("Failed to create Stripe checkout session");
