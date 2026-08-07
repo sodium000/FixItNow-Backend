@@ -76,6 +76,7 @@ const createCheckoutSession = async (userId: string, bookingId: string) => {
     });
 
     const baseUrl = config.app_url || "http://localhost:5000";
+    console.log(baseUrl);
 
     const session = await stripe.checkout.sessions.create({
       line_items: [
@@ -94,8 +95,8 @@ const createCheckoutSession = async (userId: string, bookingId: string) => {
       mode: "payment",
       customer: customer.id,
       payment_method_types: ["card"],
-      success_url: `${baseUrl}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${baseUrl}/payments/cancel`,
+      success_url: `https://fixitnow-teal.vercel.app/payment/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `https://fixitnow-teal.vercel.app/payments/cancel`,
       metadata: { userId: user.id, bookingId: booking.id },
       payment_intent_data: {
         metadata: { userId: user.id, bookingId: booking.id },
