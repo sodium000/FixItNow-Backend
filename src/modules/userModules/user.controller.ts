@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
+import { Prisma } from "../../../generated/prisma/client";
 import { userService } from "./user.service";
 
 
@@ -20,11 +21,27 @@ const registerUser = async (req: Request, res: Response) => {
   } catch (error) {
     console.log(error);
 
-    res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+    const isDuplicateEmailError =
+      error instanceof Error &&
+      error.message === "User with this email already exists";
+
+    const isPrismaDuplicateKeyError =
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === "P2002";
+
+    const statusCode = isDuplicateEmailError || isPrismaDuplicateKeyError
+      ? httpStatus.BAD_REQUEST
+      : httpStatus.INTERNAL_SERVER_ERROR;
+
+    res.status(statusCode).json({
       success: false,
-      statusCode: httpStatus.INTERNAL_SERVER_ERROR,
-      message: "Failed to register user",
-      error: (error as Error).message,
+      statusCode,
+      message: isDuplicateEmailError
+        ? "Email already in use. Please login or register with a different email."
+        : isPrismaDuplicateKeyError
+        ? "Duplicate value found. Please use a different email or phone number."
+        : "Failed to register user",
+      error: error instanceof Error ? error.message : "Unknown error",
     });
   }
 };

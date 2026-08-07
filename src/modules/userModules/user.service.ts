@@ -9,15 +9,15 @@ const registerUserIntoDB = async (payload: RegisterUserPayload) => {
     email,
     password,
     role,
-    photo,
-      phone,
+    photoUrl,
+    phone,
     experienceYrs,
     hourlyRate,
     city,
     address,
   } = payload;
 
-  console.log(payload)
+  console.log(payload);
 
   const isUserExist = await prisma.user.findUnique({
     where: { email },
@@ -36,9 +36,9 @@ const registerUserIntoDB = async (payload: RegisterUserPayload) => {
     data: {
       name,
       email,
-      password:hashedPassword,
+      password: hashedPassword,
       role,
-      photoUrl:photo,
+      photoUrl,
       phone,
 
       ...(role === "TECHNICIAN" && {

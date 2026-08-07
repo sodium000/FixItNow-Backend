@@ -32,11 +32,16 @@ export const globalErrorHandler = (err: any, req: Request, res: Response, next: 
             statusCode = httpStatus.BAD_REQUEST;
             errorMessage = "Can't reach database server"
        }
-    }else if(err instanceof Prisma.PrismaClientUnknownRequestError){
+    } else if (
+        err instanceof Error &&
+        err.message === "User with this email already exists"
+    ) {
+        statusCode = httpStatus.CONFLICT;
+        errorMessage = "Email already in use. Please login or register with a different email.";
+    } else if (err instanceof Prisma.PrismaClientUnknownRequestError) {
             statusCode = httpStatus.INTERNAL_SERVER_ERROR;
             errorMessage = "Error occurred during query execution"
     }
-
 
 
 
