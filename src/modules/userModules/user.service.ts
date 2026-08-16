@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import { prisma } from "../../lib/prisma";
-import config from "../../config";
+import config from "../../config/index";
 import { RegisterUserPayload } from "./user.interface";
 
 const registerUserIntoDB = async (payload: RegisterUserPayload) => {
