@@ -56,7 +56,13 @@ router.get("/bookings", auth(Role.ADMIN),async(req: Request, res: Response, next
     }
 });
 
-router.patch("/users/:id", auth(Role.ADMIN),catagory.UserUpdata)
+router.patch("/users/:id", auth(Role.ADMIN), catagory.UserUpdata);
+router.delete("/users/:id", auth(Role.ADMIN), catagory.deleteUser);
 
+router.patch("/categories/:id", auth(Role.ADMIN), catagory.updateCategory);
+router.delete("/categories/:id", auth(Role.ADMIN), catagory.deleteCategory);
 
-export const admin = router
+router.patch("/services/:id", auth(Role.ADMIN), catagory.updateService);
+router.delete("/services/:id", auth(Role.ADMIN), catagory.deleteService);
+
+export const admin = router;
