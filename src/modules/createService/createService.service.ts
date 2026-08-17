@@ -123,6 +123,11 @@ const deleteCategoryFromDB = async (id: string) => {
   const category = await prisma.category.findUnique({ where: { id } });
   if (!category) throw new Error("Category not found");
 
+  // Delete associated services first if onDelete: Cascade is not set in Prisma
+  await prisma.service.deleteMany({
+    where: { categoryId: id },
+  });
+
   await prisma.category.delete({ where: { id } });
   return { message: "Category deleted successfully" };
 };

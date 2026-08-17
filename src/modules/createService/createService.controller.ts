@@ -225,41 +225,54 @@ const updateCategory = async (
         message: "Invalid or missing category id",
       });
     }
-    const payload = req.body;
 
-    if (
-      payload.name !== undefined &&
-      (typeof payload.name !== "string" || !payload.name.trim())
-    ) {
+    const { name, description } = req.body;
+    const payload: { name?: string; description?: string } = {};
+
+    if (name !== undefined) {
+      if (typeof name !== "string" || !name.trim()) {
+        return res.status(httpStatus.BAD_REQUEST).json({
+          success: false,
+          message: "Category name must be a non-empty string",
+        });
+      }
+      payload.name = name.trim();
+    }
+
+    if (description !== undefined) {
+      payload.description =
+        typeof description === "string" ? description.trim() : "";
+    }
+
+    if (Object.keys(payload).length === 0) {
       return res.status(httpStatus.BAD_REQUEST).json({
         success: false,
-        message: "name must be a non-empty string",
+        message: "At least name or description must be provided to update",
       });
     }
 
-    if (
-      payload.description !== undefined &&
-      typeof payload.description !== "string"
-    ) {
-      return res.status(httpStatus.BAD_REQUEST).json({
-        success: false,
-        message: "description must be a string",
-      });
-    }
-
-    const updated = await CategoryCreate.updateCategoryInDB(id, payload);
+    const updatedCategory = await CategoryCreate.updateCategoryInDB(
+      id as string,
+      payload,
+    );
 
     res.status(httpStatus.OK).json({
       success: true,
       statusCode: httpStatus.OK,
       message: "Category updated successfully",
-      data: updated,
+      data: updatedCategory,
     });
   } catch (error: any) {
     if (error?.message === "Category not found") {
       return res.status(httpStatus.NOT_FOUND).json({
         success: false,
         message: "Category not found",
+      });
+    }
+    if (error?.code === "P2002") {
+      return res.status(httpStatus.CONFLICT).json({
+        success: false,
+        message: "A category with this name already exists",
       });
     }
     next(error);
@@ -274,12 +287,19 @@ const deleteCategory = async (
 ) => {
   try {
     const { id } = req.params;
-    const result = await CategoryCreate.deleteCategoryFromDB(id as string);
+    if (!id || typeof id !== "string") {
+      return res.status(httpStatus.BAD_REQUEST).json({
+        success: false,
+        message: "Invalid or missing category id",
+      });
+    }
+
+    await CategoryCreate.deleteCategoryFromDB(id as string);
+
     res.status(httpStatus.OK).json({
       success: true,
       statusCode: httpStatus.OK,
       message: "Category deleted successfully",
-      data: result,
     });
   } catch (error: any) {
     if (error?.message === "Category not found") {
