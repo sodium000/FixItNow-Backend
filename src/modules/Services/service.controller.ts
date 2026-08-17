@@ -50,13 +50,6 @@ const getAllServices = async (
       ...(parsedRating !== undefined && { rating: parsedRating }),
     });
 
-    if(services.length === 0){
-      return res.status(httpStatus.NOT_FOUND).json({
-        success: false,
-        message: "No services found",
-      });
-    }
-
     res.status(httpStatus.OK).json({
       success: true,
       statusCode: httpStatus.OK,

@@ -95,7 +95,7 @@ const createCheckoutSession = async (userId: string, bookingId: string) => {
       mode: "payment",
       customer: customer.id,
       payment_method_types: ["card"],
-      success_url: `http://localhost:3000/payment/success?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `https://fixitnow-teal.vercel.app/payment/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `https://fixitnow-teal.vercel.app/payment/cancel`,
       metadata: { userId: user.id, bookingId: booking.id },
       payment_intent_data: {
