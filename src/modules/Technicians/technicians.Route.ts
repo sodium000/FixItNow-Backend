@@ -25,6 +25,23 @@ router.get("/allservice", async(req: Request, res: Response, next: NextFunction)
     }
 }); 
 
+router.get("/categories", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const AllCategory = await prisma.category.findMany({
+            include: {
+                services: true,
+            },
+        });
+        res.status(200).json({
+            success: true,
+            message: "Get All Category successfully",
+            data: { AllCategory },
+        });
+    } catch (error) {
+        next(error);
+    }
+}); 
+
 
 router.get(
   "/technician/bookings",

@@ -14,6 +14,7 @@ import { reviewRoute } from "./modules/Reviews/review.route";
 import { serviceRoute } from "./modules/Services/service.route";
 import { paymentRoute } from "./modules/Payments/payment.route";
 import { paymentController } from "./modules/Payments/payment.controller";
+import giveotp from "./lib/redis/otp_route";
 
 
 const app: Application = express();
@@ -49,6 +50,8 @@ app.use("/api/bookings", bookingRoute);
 app.use("/api/reviews", reviewRoute);
 app.use("/api/services", serviceRoute);
 app.use("/api/payments", paymentRoute);
+
+app.use("/otp", giveotp)
 
 app.use(notFound);
 app.use(globalErrorHandler);
