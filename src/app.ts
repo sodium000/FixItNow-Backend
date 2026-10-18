@@ -16,7 +16,6 @@ import { paymentRoute } from "./modules/Payments/payment.route.js";
 import { paymentController } from "./modules/Payments/payment.controller.js";
 import { PasswordForgote } from "./modules/forgot_Password/forgotPassword.route.js";
 
-
 const app: Application = express();
 
 app.use(

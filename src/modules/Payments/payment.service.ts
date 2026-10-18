@@ -75,7 +75,7 @@ const createCheckoutSession = async (userId: string, bookingId: string) => {
       metadata: { userId: user.id },
     });
 
-    const baseUrl = config.app_url || "http://localhost:5000";
+    const baseUrl = config.app_url || `http://localhost:${config.PORT}`;
     
 
     const session = await stripe.checkout.sessions.create({
