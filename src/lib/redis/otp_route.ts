@@ -1,5 +1,5 @@
 
-import { client, generateOTP } from "./redis";
+import { client, generateOTP } from "./redis.js";
 
 
 
