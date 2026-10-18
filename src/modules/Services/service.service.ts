@@ -1,5 +1,5 @@
-import { prisma } from "../../lib/prisma";
-import { GetServicesQuery } from "./service.interface";
+import { prisma } from "../../lib/prisma.js";
+import { GetServicesQuery } from "./service.interface.js";
 
 const getAllServicesFromDB = async (query: GetServicesQuery) => {
   const { type, location, rating } = query;

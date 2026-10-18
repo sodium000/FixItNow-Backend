@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
-import { paymentService } from "./payment.service";
+import { paymentService } from "./payment.service.js";
 
 const createCheckoutSession = async (
   req: Request,

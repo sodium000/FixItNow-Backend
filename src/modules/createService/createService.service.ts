@@ -1,6 +1,6 @@
-import { prisma } from "../../lib/prisma";
+import { prisma } from "../../lib/prisma.js";
 
-import { Role } from "../../../generated/prisma/enums";
+import { Role } from "../../../generated/prisma/enums.js";
 
 export interface UpdateUserPayload {
   name?: string;

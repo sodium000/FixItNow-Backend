@@ -1,8 +1,8 @@
 
 import httpStatus from "http-status";
 import { NextFunction, Request, Response } from "express";
-import { prisma } from "../../lib/prisma";
-import { tecnicianFilter } from "./technicians.service";
+import { prisma } from "../../lib/prisma.js";
+import { tecnicianFilter } from "./technicians.service.js";
 
 
 const getAllTecnicians = async (

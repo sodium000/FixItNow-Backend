@@ -1,6 +1,6 @@
-import { BookingStatus, Role } from "../../../generated/prisma/enums";
-import { prisma } from "../../lib/prisma";
-import { CreateBookingPayload } from "./booking.interface";
+import { BookingStatus, Role } from "../../../generated/prisma/enums.js";
+import { prisma } from "../../lib/prisma.js";
+import { CreateBookingPayload } from "./booking.interface.js";
 
 const createBookingIntoDB = async (
   userId: string,

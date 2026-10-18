@@ -1,20 +1,20 @@
 import cookieParser from "cookie-parser";
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
-import config from "./config/index";
-import { userRoute } from "./modules/userModules/user.Route";
-import { notFound } from "./middlewares/notFound";
-import { logUser } from "./modules/authMoules/auth.Route";
-import { globalErrorHandler } from "./middlewares/globalErrorHandler";
-import { tecnicianFilter } from "./modules/Technicians/technicians.Route";
-import { technicianSelfRoute } from "./modules/Technicians/technicianSelf.Route";
-import { admin } from "./modules/createService/createService.Route";
-import { bookingRoute } from "./modules/Bookings/booking.route";
-import { reviewRoute } from "./modules/Reviews/review.route";
-import { serviceRoute } from "./modules/Services/service.route";
-import { paymentRoute } from "./modules/Payments/payment.route";
-import { paymentController } from "./modules/Payments/payment.controller";
-import { PasswordForgote } from "./modules/forgot_Password/forgotPassword.route";
+import config from "./config/index.js";
+import { userRoute } from "./modules/userModules/user.Route.js";
+import { notFound } from "./middlewares/notFound.js";
+import { logUser } from "./modules/authMoules/auth.Route.js";
+import { globalErrorHandler } from "./middlewares/globalErrorHandler.js";
+import { tecnicianFilter } from "./modules/Technicians/technicians.Route.js";
+import { technicianSelfRoute } from "./modules/Technicians/technicianSelf.Route.js";
+import { admin } from "./modules/createService/createService.Route.js";
+import { bookingRoute } from "./modules/Bookings/booking.route.js";
+import { reviewRoute } from "./modules/Reviews/review.route.js";
+import { serviceRoute } from "./modules/Services/service.route.js";
+import { paymentRoute } from "./modules/Payments/payment.route.js";
+import { paymentController } from "./modules/Payments/payment.controller.js";
+import { PasswordForgote } from "./modules/forgot_Password/forgotPassword.route.js";
 
 
 const app: Application = express();

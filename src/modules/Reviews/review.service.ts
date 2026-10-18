@@ -1,6 +1,6 @@
-import { BookingStatus } from "../../../generated/prisma/enums";
-import { prisma } from "../../lib/prisma";
-import { CreateReviewPayload } from "./review.interface";
+import { BookingStatus } from "../../../generated/prisma/enums.js";
+import { prisma } from "../../lib/prisma.js";
+import { CreateReviewPayload } from "./review.interface.js";
 
 const createReviewIntoDB = async (userId: string, payload: CreateReviewPayload) => {
   const { bookingId, rating, comment } = payload;

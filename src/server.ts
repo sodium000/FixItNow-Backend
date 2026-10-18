@@ -1,8 +1,8 @@
-import app from "./app";
+import app from "./app.js";
 import "dotenv/config"
-import { prisma } from "./lib/prisma";
-import config from "./config/index";
-import { client } from "./lib/redis/redis";
+import { prisma } from "./lib/prisma.js";
+import config from "./config/index.js";
+import { client } from "./lib/redis/redis.js";
 
 
 const PORT = config.PORT

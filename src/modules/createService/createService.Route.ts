@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { auth } from "../../middlewares/auth";
-import { Role } from "../../../generated/prisma/enums";
-import { catagory } from "./createService.controller";
-import { prisma } from "../../lib/prisma";
+import { auth } from "../../middlewares/auth.js";
+import { Role } from "../../../generated/prisma/enums.js";
+import { catagory } from "./createService.controller.js";
+import { prisma } from "../../lib/prisma.js";
 
 
 const router = Router()

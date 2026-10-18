@@ -1,8 +1,8 @@
 import Stripe from "stripe";
-import { BookingStatus, PaymentStatus } from "../../../generated/prisma/enums";
-import config from "../../config/index";
-import { prisma } from "../../lib/prisma";
-import { stripe } from "../../lib/stripe";
+import { BookingStatus, PaymentStatus } from "../../../generated/prisma/enums.js";
+import config from "../../config/index.js";
+import { prisma } from "../../lib/prisma.js";
+import { stripe } from "../../lib/stripe.js";
 
 const completePaymentForBooking = async (params: {
   bookingId: string;

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
-import { Prisma } from "../../../generated/prisma/client";
-import { userService } from "./user.service";
+import { Prisma } from "../../../generated/prisma/client.js";
+import { userService } from "./user.service.js";
 
 
 const registerUser = async (req: Request, res: Response) => {

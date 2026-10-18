@@ -1,5 +1,5 @@
-import { prisma } from "../../lib/prisma";
-import giveotp from "../../lib/redis/otp_route";
+import { prisma } from "../../lib/prisma.js";
+import giveotp from "../../lib/redis/otp_route.js";
 
 interface Playlode {
     email : string

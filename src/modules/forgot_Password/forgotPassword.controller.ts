@@ -1,6 +1,6 @@
 import httpStatus from "http-status";
 import { Request, Response } from "express";
-import { getOTP } from "./forgotPassord.service";
+import { getOTP } from "./forgotPassord.service.js";
 
 
 

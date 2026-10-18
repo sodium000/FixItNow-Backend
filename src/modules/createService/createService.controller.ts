@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { CategoryCreate } from "./createService.service";
-import { prisma } from "../../lib/prisma";
+import { CategoryCreate } from "./createService.service.js";
+import { prisma } from "../../lib/prisma.js";
 import httpStatus from "http-status";
-import { Role } from "../../../generated/prisma/enums";
+import { Role } from "../../../generated/prisma/enums.js";
 
 const NewCategory = async (req: Request, res: Response, next: NextFunction) => {
   try {

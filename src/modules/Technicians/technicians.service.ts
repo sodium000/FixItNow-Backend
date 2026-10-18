@@ -1,10 +1,10 @@
-import { BookingStatus } from "../../../generated/prisma/enums";
-import { prisma } from "../../lib/prisma";
+import { BookingStatus } from "../../../generated/prisma/enums.js";
+import { prisma } from "../../lib/prisma.js";
 import {
   UpdateTechnicianAvailabilityPayload,
   UpdateTechnicianBookingStatusPayload,
   UpdateTechnicianProfilePayload,
-} from "./technician.interface";
+} from "./technician.interface.js";
 
 const technicianById = async (id: string) => {
   const technician = await prisma.technicianProfile.findFirstOrThrow({

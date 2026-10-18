@@ -1,5 +1,5 @@
 import { createClient } from "redis";
-import config from "../../config";
+import config from "../../config/index.js";
 import crypto from "crypto";
 
  export const  client = createClient({

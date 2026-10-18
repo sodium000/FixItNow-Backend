@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { forgotPass } from "./forgotPassword.controller";
+import { forgotPass } from "./forgotPassword.controller.js";
 
 
 

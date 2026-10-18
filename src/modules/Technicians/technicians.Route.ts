@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { getTecnicians } from "./technicians.controller";
-import { auth } from "../../middlewares/auth";
-import { Role } from "../../../generated/prisma/enums";
-import { bookingController } from "../Bookings/booking.controller";
-import { prisma } from "../../lib/prisma";
+import { getTecnicians } from "./technicians.controller.js";
+import { auth } from "../../middlewares/auth.js";
+import { Role } from "../../../generated/prisma/enums.js";
+import { bookingController } from "../Bookings/booking.controller.js";
+import { prisma } from "../../lib/prisma.js";
 
  const router = Router();
 

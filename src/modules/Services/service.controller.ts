@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
-import { serviceService } from "./service.service";
+import { serviceService } from "./service.service.js";
 
 const getAllServices = async (
   req: Request,
